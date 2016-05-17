@@ -19,7 +19,7 @@ $(document).ready(function(){
     service.nearbySearch({
       location: addressGeo,
       openNow: true,
-      zoom: 30,
+      zoom: 15,
       radius: 2500,
       type: ['food']
       }, callback);
