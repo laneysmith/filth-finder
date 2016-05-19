@@ -5,64 +5,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Filth Finder</title>
-
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-1.12.3.min.js"   integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ="   crossorigin="anonymous"></script>
     <script src="js/script.js"></script>
   </head>
-  <body>
+  <body class="flexbox-container">
 
-    <div id="container">
-      <header>
-        <img src="img/filthfinder.png" />
-      </header>
-      <main>
-        <center>
-          <form>
-            <p>
-              <button id="currentLocation">Use current location <i class="fa fa-crosshairs fa-lg"></i></button>
-            </p>
-            <div class="search">
-              <p>
-                <input id="address" type="text" name="zip" placeholder="e.g., 1644 Platte St, Denver, CO" autofocus>
-              </p>
-              <input type="submit" id="searchAddress" value="Search" />
-      			</div>
-          </form>
-        </center>
+    <main>
+      <img src="img/filthfinder.png" class="logo">
+      <br /><br />
+      <form>
+        <p>
+          <button id="currentLocation">Use current location <i class="fa fa-crosshairs fa-lg"></i></button>
+        </p>
+          Or enter an address below
+        <p>
+          <input id="address" type="text" name="zip" placeholder="1644 Platte St, Denver, CO" autofocus>
+        </p>
+        <input type="submit" id="searchAddress" value="Search" />
+      </form>
+    </main>
 
-        <h2>Results</h2>
-        <ol>
-          <li><a href="#map" class="active">Map</a></li>
-          <li><a href="#list" class="inactive">List</a></li>
-        </ol>
+    <footer>
+      <img src="img/powered_by_google_on_white@2x.png" class="google"> &
+      <img src="img/yelp-logo-small@2x.png" class="yelp">
+    </footer>
 
-        <div class="content active" id="map"></div>
-        <div class="content inactive" id="list">
-          <table>
-            <colgroup>
-              <col>
-              <col style="width:120px">
-              <col style="width:120px">
-            </colgroup>
-            <thead>
-              <tr>
-                <th>Place</th>
-                <th>Distance</th>
-                <th>Filth Rating <i class="fa fa-sort-desc fa-lg"></i></th>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
-          <button id="more">Load more results</button>
-
-        </div>
-
-      </main>
-    </div>
-
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRvMShpvgsxZ333POD0HogbBD999AVf2U&libraries=places&callback=initMap" async defer></script>
   </body>
 </html>

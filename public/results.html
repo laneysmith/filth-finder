@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filth Finder - Results</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-2.2.3.js" integrity="sha256-laXWtGydpwqJ8JA+X9x2miwmaiKhn8tVmOVEigRNtP4="   crossorigin="anonymous"></script>
+  </head>
+  <body class="flexbox-container-results">
+    <h3>Filth Near You</h3>
+    <ul id="tabs" class="tabNav">
+      <li><a href="#map" class="current">Map</a></li>
+      <li><a href="#list">List</a></li>
+    </ul>
+    <div class="tabContainer">
+      <div class="tab current" id="map"></div>
+      <div class="tab" id="list">
+        <table>
+          <thead>
+            <tr>
+              <th>Place</th>
+              <th>Distance (m)</th>
+              <th>Filth Rating</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+        <!-- <button id="more">Load more results</button> -->
+      </div>
+    </div>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRvMShpvgsxZ333POD0HogbBD999AVf2U&libraries=places&callback=initMap" async defer></script>
+    <script src="js/map.js"></script>
+    <script src="js/tabs.js"></script>
+  </body>
+</html>
