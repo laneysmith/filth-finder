@@ -1,6 +1,5 @@
 @import "normalize";
 @import "colors";
-@import "fonts";
 
 * {
   -moz-box-sizing: border-box;
@@ -63,6 +62,10 @@ footer {
   }
 }
 
+.hide {
+  display: none;
+}
+
 .logo {
   padding: 0;
   width: 100%;
@@ -72,41 +75,6 @@ footer {
 #map {
   width: 100%;
   height: 85vh;
-}
-// #tabs {
-//   display: none;
-// }
-
-header,
-footer,
-main > section,
-main > aside {
-   margin: 0;
-   padding: 1em 0.5em;
-}
-
-main > section {
-  height: 100vh;
-   background-color: #996;
-   -webkit-flex: 1 0;
-           flex: 1 0;
-   -webkit-order: 1;
-           order: 1;
-}
-
-header, footer {
-   display: block;
-}
-
-header {
-  height: 100vh;
-  margin: 0 auto;
-  text-align: center;
-  img {
-    padding: 5vh 0;
-    width: 90%;
-    max-width: 600px;
-  }
 }
 
 /* Too narrow to support three columns */
@@ -129,21 +97,15 @@ header {
    }
 }
 
-input[type="text"] {
+#address {
+  width: 280px;
   padding: 10px;
   border: $border solid 1px;
   border-radius: 5px;
-}
-
-#address {
-  width: 280px;
 }
 
 #currentLocation, #searchAddress {
-  width: 280px;
-  padding: 10px;
-  border: $border solid 1px;
-  border-radius: 5px;
+  @extend #address;
   text-shadow: 1px 1px 0px #fff;
   border-top:1px solid #fafafa;
   border-bottom:1px solid #e0e0e0;
@@ -158,6 +120,8 @@ input[type="text"] {
   box-shadow: 0 1px 2px #d1d1d1;
 }
 
+/* TABS */
+
 ul.tabNav {
   list-style: none;
   float:left;
@@ -168,7 +132,7 @@ ul.tabNav {
     font-weight: bold;
     display: inline-block;
     width: 100px;
-    padding: 5px 10px;
+    padding: 5px 20px;
     margin-right: 5px;
     border: $border solid 1px;
     border-bottom: 0;
@@ -178,7 +142,6 @@ ul.tabNav {
     text-shadow: 1px 1px 0px #fff;
     border-bottom:1px solid #e0e0e0;
     .current {
-      color:red;
       a {
           background-color: #dedede;
           border: none;
@@ -231,7 +194,6 @@ table {
   th {
     text-align: left;
   	padding: 5px;
-  	border-top:1px solid #fafafa;
   	border-bottom:1px solid #e0e0e0;
   	background: #ededed;
   	background: -webkit-gradient(linear, left top, left bottom, from(#ededed), to(#ebebeb));
