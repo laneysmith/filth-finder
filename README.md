@@ -13,6 +13,9 @@ List of places with addresses, distance, and filth rating.
 Location/address
 
 ## What technologies do you plan to use?
-Google Maps Places API
+Google Maps API
+Yelp Search API
 
 ## Feature list
+
+Food font from http://foodfont.com/
