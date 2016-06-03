@@ -1,0 +1,26 @@
+{
+  "name": "filth-finder",
+  "version": "1.0.0",
+  "description": "## Project Description Filth Finder: takes your current location (or inputted address) & returns places nearby where you can purchase disgusting junk food, ranked by filth level.",
+  "main": "yelpthing.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/laneysmith/Filth-Finder.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/laneysmith/Filth-Finder/issues"
+  },
+  "homepage": "https://github.com/laneysmith/Filth-Finder#readme",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "cors": "^2.7.1",
+    "express": "^4.13.4",
+    "yelp": "^1.0.1"
+  }
+}

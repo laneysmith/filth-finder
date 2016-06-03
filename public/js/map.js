@@ -13,6 +13,7 @@ function initMap() {
     zoom: 14
   });
 	getLocation();
+  yelpStuff(address);
 }
 
 // Pulls location from local storage when called inside initMap()
@@ -20,36 +21,35 @@ function getLocation() {
 	if (localStorage.hasOwnProperty('filthFinderLocation')) {
 		address = localStorage.getItem('filthFinderLocation');
 		geocodeAddress(address);
-		yelpStuff();
+    // console.log(address)
 	} else if (localStorage.hasOwnProperty('filthFinderCurrLoc')) {
 		addressGeo = JSON.parse(localStorage.getItem('filthFinderCurrLoc'));
 		console.log(addressGeo);
-		map.setCenter(addressGeo);
 		address = reverseGeocode(addressGeo);
-		yelpStuff();
 	} else {
-		alert('fuck');
+		alert('Oops. No location found.');
 	}
+  map.setCenter(addressGeo);
+  console.log(address);
 }
 
 // geocodeAddress() converts the address/city inputted into the form into
 // geographic coordinates. If successful, it passes the new coordinate pair
 // to updateMap(), which recenters the map. If it fails, an error message pops // up. This function calls the locMarkerClear function to clear markers from
 // previous searches.
-function geocodeAddress() {
+function geocodeAddress(address) {
   var geocoder = new google.maps.Geocoder();
     geocoder.geocode( { 'address': address}, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
         addressGeo = results[0].geometry.location;
-        map.setCenter(addressGeo);
       } else {
         alert("Geocode was not successful for the following reason: " + status);
       }
   });
 }
 
-function yelpStuff() {
-	$.post("https://galvanize-yelp-api.herokuapp.com/search", {
+function yelpStuff(address) {
+	$.post('/yelp/search', {
 		"term": "food",
 		"radius_filter": 2000,
 		"category_filter": 'convenience,hotdogs,donuts',
@@ -141,7 +141,7 @@ function trashCanRating(rating) {
   return trash;
 }
 
-function reverseGeocode(geocoder, map, infowindow) {
+function reverseGeocode(addressGeo, geocoder, map, infowindow) {
 	var geocoder = new google.maps.Geocoder();
   geocoder.geocode({'location': addressGeo}, function(results, status) {
     if (status === google.maps.GeocoderStatus.OK) {
