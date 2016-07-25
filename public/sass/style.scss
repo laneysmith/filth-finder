@@ -4,11 +4,6 @@
 * {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  outline: 0 solid red;
-}
-
-html, body {
-  padding: 0;
 }
 
 body {
@@ -18,10 +13,11 @@ body {
 
 h3 {
   text-shadow: 1px 1px 0px #fff;
-  margin-bottom: 0;
+  margin: 0;
 }
 
 .flexbox-container {
+  padding: 1rem;
   margin: 0 auto;
   max-width: 90%;
 	display: flex;
@@ -32,11 +28,34 @@ h3 {
 }
 
 .flexbox-container-results {
-  margin: 0 auto;
-  width: 90%;
-	display: flex;
+  display: flex;
+  min-height: 100vh;
   flex-direction: column;
-  height: 100vh;
+  margin: 0 auto;
+  padding: 1rem;
+  max-width: 900px;
+}
+
+.row-container {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+}
+.map {
+  flex: 0.5;
+}
+.list {
+  flex: 0.5; /* width of columns */
+}
+
+@media (max-width: 768px) {
+  .row-container {
+    flex-direction: column;
+    flex: 0;
+  }
+  .map, .list {
+    flex: 0;
+  }
 }
 
 main {
@@ -54,11 +73,13 @@ footer {
   align-items: center;
   align-self: center;
   justify-content: center;
-  .google {
-    height: 15px;
+  margin-top: 1rem;
+  a {
+    color: #404040;
+    transition: all 0.5s ease;
   }
-  .yelp {
-    height: 25px;
+  a:hover {
+    color: #C0C0C0;
   }
 }
 
@@ -91,9 +112,8 @@ footer {
     -webkit-order: 0;
             order: 0;
    }
-   main > aside, header, footer {
+   main > aside, header {
     min-height: 50px;
-
    }
 }
 
@@ -118,60 +138,6 @@ footer {
   -moz-box-shadow: 0 1px 2px #d1d1d1;
   -webkit-box-shadow: 0 1px 2px #d1d1d1;
   box-shadow: 0 1px 2px #d1d1d1;
-}
-
-/* TABS */
-
-ul.tabNav {
-  list-style: none;
-  float:left;
-  padding-left:0;
-  margin-bottom:0;
-  li {
-    float: left;
-    font-weight: bold;
-    display: inline-block;
-    width: 100px;
-    padding: 5px 20px;
-    margin-right: 5px;
-    border: $border solid 1px;
-    border-bottom: 0;
-    border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
-    background-color: #f2f2f2;
-    text-shadow: 1px 1px 0px #fff;
-    border-bottom:1px solid #e0e0e0;
-    .current {
-      a {
-          background-color: #dedede;
-          border: none;
-          padding: 8px;
-      }
-    }
-  }
-  a {
-    color: #404040;
-    display: block;
-    text-decoration: none;
-  }
-}
-
-div.tabContainer {
-    clear: both;
-    float: left;
-    width: 100%;
-}
-div.tabContainer div.tab {
-    border: 1px solid #C0C0C0;
-    color: #000;
-    display: none;
-    padding: 10px;
-}
-div.tabContainer div.current {
-    display: block;
-}
-div.tab p:last-child {
-    margin-bottom: 0;
 }
 
 /* TABLES */

@@ -10,29 +10,21 @@
     <script src="https://code.jquery.com/jquery-2.2.3.js" integrity="sha256-laXWtGydpwqJ8JA+X9x2miwmaiKhn8tVmOVEigRNtP4="   crossorigin="anonymous"></script>
   </head>
   <body class="flexbox-container-results">
-
-    <h3>Filth Near You</h3>
-    <ul id="tabs" class="tabNav">
-      <li><a href="#map" class="current">Map</a></li>
-      <li><a href="#list">List</a></li>
-    </ul>
-    <div class="tabContainer">
-      <div class="tab current" id="map"></div>
-      <div class="tab" id="list">
+    <div id="results-header"><h3>Filth Near You</h3></div>
+    <div class="row-container">
+      <div class="map"><div id="map"></div></div>
+      <div class="list">
         <table>
           <thead>
-            <tr>
-              <th>Place</th>
-              <th>Distance (m)</th>
-              <th>Filth Rating</th>
-            </tr>
           </thead>
           <tbody>
           </tbody>
         </table>
       </div>
     </div>
-
+    <footer>
+      <a href="https://github.com/laneysmith/filth-finder" target="_blank"><i class="fa fa-github fa-2x"></i></a>
+    </footer>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRvMShpvgsxZ333POD0HogbBD999AVf2U&libraries=places&callback=initMap" async defer></script>
     <script src="js/map.js"></script>
     <script src="js/tabs.js"></script>

@@ -1,8 +1,6 @@
 var map;
 var infowindow;
 var service;
-var address;
-var addressGeo;
 var yelpData = [];
 
 // Initializes the map.
@@ -13,38 +11,54 @@ function initMap() {
     zoom: 14
   });
 	getLocation();
-  yelpStuff(address);
 }
 
 // Pulls location from local storage when called inside initMap()
 function getLocation() {
-	if (localStorage.hasOwnProperty('filthFinderLocation')) {
-		address = localStorage.getItem('filthFinderLocation');
+	if (localStorage.hasOwnProperty('ffAddress')) {
+		var address = localStorage.getItem('ffAddress');
 		geocodeAddress(address);
-    // console.log(address)
-	} else if (localStorage.hasOwnProperty('filthFinderCurrLoc')) {
-		addressGeo = JSON.parse(localStorage.getItem('filthFinderCurrLoc'));
-		console.log(addressGeo);
-		address = reverseGeocode(addressGeo);
+    yelpStuff(address);
+	} else if (localStorage.hasOwnProperty('ffCurrentLocation')) {
+		var addressGeo = JSON.parse(localStorage.getItem('ffCurrentLocation'));
+    map.setCenter(addressGeo);
+		reverseGeocode(addressGeo);
 	} else {
 		alert('Oops. No location found.');
 	}
-  map.setCenter(addressGeo);
-  console.log(address);
 }
 
-// geocodeAddress() converts the address/city inputted into the form into
-// geographic coordinates. If successful, it passes the new coordinate pair
-// to updateMap(), which recenters the map. If it fails, an error message pops // up. This function calls the locMarkerClear function to clear markers from
-// previous searches.
+// Converts the address/city into geographic coordinates
+// then sets map center
 function geocodeAddress(address) {
   var geocoder = new google.maps.Geocoder();
-    geocoder.geocode( { 'address': address}, function(results, status) {
-      if (status == google.maps.GeocoderStatus.OK) {
-        addressGeo = results[0].geometry.location;
+  var addressGeo;
+  geocoder.geocode({'address': address}, function(results, status) {
+    if (status === google.maps.GeocoderStatus.OK) {
+      addressGeo = results[0].geometry.location;
+      map.setCenter(addressGeo);
+      return addressGeo;
+    } else {
+      alert('Geocode was not successful for the following reason: ' + status);
+    }
+  });
+}
+
+// Converts geographic coordinates into an approximate address
+// then searches Yelp
+function reverseGeocode(addressGeo, geocoder, map, infowindow) {
+	var geocoder = new google.maps.Geocoder();
+  geocoder.geocode({'location': addressGeo}, function(results, status) {
+    if (status === google.maps.GeocoderStatus.OK) {
+      if (results[1]) {
+				var address = results[1].formatted_address;
+				yelpStuff(address);
       } else {
-        alert("Geocode was not successful for the following reason: " + status);
+        window.alert('No results found');
       }
+    } else {
+      window.alert('Geocoder failed due to: ' + status);
+    }
   });
 }
 
@@ -77,16 +91,20 @@ function yelpStuff(address) {
 		yelpData = yelpData.sort(function(a, b) {
 			return b.filthiness - a.filthiness;
 		});
-		console.log(yelpData);
-		yelpData.forEach(function(data) {
-			if (isNaN(data.distance)) {
-				var trash = trashCanRating(data.filthiness);
-				$('tbody').append('<tr><td><i class="fa fa-map-marker"></i> ' + data.name + '<br><small>' + dataItem.address + '</small>' + '</td><td>' + '</td><td>' + trash + '</td></tr>');
-			} else {
-				var trash = trashCanRating(data.filthiness);
-				$('tbody').append('<tr><td><i class="fa fa-map-marker"></i> ' + data.name + '<br><small>' + dataItem.address + '</small>' + '</td><td>' + data.distance + '</td><td>' + trash + '</td></tr>');
-			}
-			});
+    // if location entered was not precise, exclude distance field
+    if (isNaN(yelpData[0].distance)) {
+      $('thead').append('<tr><th>Place</th><th>Filth Rating</th></tr>');
+      yelpData.forEach(function(data) {
+        var trash = trashCanRating(data.filthiness);
+        $('tbody').append('<tr><td><i class="fa fa-map-marker"></i> ' + data.name + '<br><small>' + dataItem.address + '</small></td><td>' + trash + '</td></tr>');
+      });
+    } else {
+      $('thead').append('<tr><th>Place</th><th>Distance (m)</th><th>Filth Rating</th></tr>');
+      yelpData.forEach(function(data) {
+        var trash = trashCanRating(data.filthiness);
+        $('tbody').append('<tr><td><i class="fa fa-map-marker"></i> ' + data.name + '<br><small>' + dataItem.address + '</small>' + '</td><td>' + data.distance + '</td><td>' + trash + '</td></tr>');
+      });
+    }
 	});
 }
 
@@ -107,7 +125,7 @@ function filthRating(flatCat, rating) {
 	return points;
 }
 
-// Creates markers with labels on the map.
+// Creates markers with labels on the map
 function createMarker(place, filthiness) {
   var placeLoc = {};
 	placeLoc.lat = place.location.coordinate.latitude;
@@ -123,7 +141,7 @@ function createMarker(place, filthiness) {
   });
 }
 
-// Translates numeric rating to trash can equivalent.
+// Translates numeric rating to trash can equivalent
 function trashCanRating(rating) {
   var filthiness = Math.round(rating);
   var trash;
@@ -139,28 +157,4 @@ function trashCanRating(rating) {
     trash = '<i class="fa fa-trash"></i><i class="fa fa-trash"></i><i class="fa fa-trash"></i><i class="fa fa-trash"></i><i class="fa fa-trash"></i>';
   } else { trash = 'No Rating'; }
   return trash;
-}
-
-function reverseGeocode(addressGeo, geocoder, map, infowindow) {
-	var geocoder = new google.maps.Geocoder();
-  geocoder.geocode({'location': addressGeo}, function(results, status) {
-    if (status === google.maps.GeocoderStatus.OK) {
-      if (results[1]) {
-				address = results[1].formatted_address;
-				console.log(address);
-        // map.setZoom(11);
-        // var marker = new google.maps.Marker({
-        //   position: latlng,
-        //   map: map
-        // });
-        // updateMap(results[1].formatted_address);
-				// infowindow.setContent(results[1].formatted_address);
-        // infowindow.open(map, marker);
-      } else {
-        window.alert('No results found');
-      }
-    } else {
-      window.alert('Geocoder failed due to: ' + status);
-    }
-  });
 }
