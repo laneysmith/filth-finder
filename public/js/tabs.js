@@ -7,7 +7,7 @@ $(document).ready(function() {
     $(this).parent().parent().next('.tabContainer').children('.current').slideUp('fast', function() {
       $(this).removeClass('current');
       $(this).parent().children('div:nth-child(' + curChildIndex + ')').slideDown('normal', function() {
-          $(this).addClass('current');
+        $(this).addClass('current');
       });
     });
     return false;
